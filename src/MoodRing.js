@@ -34,15 +34,7 @@ class MoodRing extends React.Component{
             <div>
                 {/* comments work in here... */}
                 <p>Some mood ring stuff. Set color and mood. Then display on DOM</p>
-                <select onChange={ this.handleMoodChange }>
-                    <option>elated</option>
-                    <option>content</option>
-                    <option>meh</option>
-                    <option>melancholy</option>
-                    <option>confused</option>
-                    <option>jubilant</option>
-                    <option>sad</option>
-                </select>
+                <input type="text" placeholder="mood?" onChange={ this.handleMoodChange }></input>
                 <select onChange={ this.handleColorChange }>
                     <option>Red</option>
                     <option>Orange</option>
