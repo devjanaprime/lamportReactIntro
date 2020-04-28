@@ -3,18 +3,24 @@ import React from 'react';
 class MoodRing extends React.Component{
     // lets us share info throughout the Component
     state = {
-        mood: 'melancholy',
-        color: 'Magenta'
+        currentMood: {
+            mood: 'melancholy',
+            color: 'Magenta'
+        },
+        savedMoods: []
     } // end state
     // run when the component is ready (kinda like document ready, but just for this component, not the whole page)
     componentDidMount(){
-        console.log( 'MoodRing mounted. Mood at component did mount:', this.state.mood, this.state.color );
+        console.log( 'MoodRing mounted. Mood at component did mount:', this.state.currentMood.mood, this.state.currentMood.color );
     } // end func
     // run when the user changes a property
     handleChangeFor = ( event, property )=>{
         console.log( 'in handleChangeFor:', property, event.target.value );
         this.setState({
-            [property]: event.target.value
+            currentMood:{
+                ...this.state.currentMood,
+                [property]: event.target.value
+            }
         }) // end setState
     } // end handleChangeFor
 
@@ -34,11 +40,25 @@ class MoodRing extends React.Component{
                     <option>Purple</option>
                     <option>Tan</option>
                 </select>
-                <h4>Current Mood: { this.state.mood }</h4>
-                <h4>Current Color: { this.state.color }</h4>
+                <h4>Current Mood: { this.state.currentMood.mood }</h4>
+                <h4>Current Color: { this.state.currentMood.color }</h4>
+                <button onClick={ this.saveMood }>Save</button>
+                <ul>
+                    { this.state.savedMoods.map( ( item )=> <li key={item.mood}>{ item.mood }: { item.color }</li> ) }
+                </ul>
+                <p>{ JSON.stringify( this.state ) }</p>
             </div>
         ); //end return JSX
     } // end render
+
+    saveMood = () => {
+        console.log( 'in saveMood' );
+        this.setState({
+            // b/c this is an array, we use spread to retain existing values
+            savedMoods: [ ...this.state.savedMoods, this.state.currentMood ]
+        })
+    }
+
 } // end component
 
 export default MoodRing;
